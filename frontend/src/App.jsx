@@ -14,6 +14,7 @@ import { useProject } from './context/ProjectContext'
 import { useCategoryFilter } from './context/CategoryContext'
 import { getAllWorkOrdersForExport } from './api'
 import ProjectSwitcher from './components/ProjectSwitcher'
+import AboutModal from './components/AboutModal'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -150,9 +151,12 @@ export default function App() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div>
+          <div className='flex gap-2'>
+            <div>
             <h1 className="text-xl font-bold text-gray-900">BIM Maintenance System</h1>
             <p className="text-xs text-gray-500 mt-0.5">Preventive Maintenance Platform</p>
+            </div>
+            <AboutModal />
           </div>
           <div className="flex gap-2">
             <button
