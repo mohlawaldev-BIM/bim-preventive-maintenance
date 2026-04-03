@@ -229,7 +229,9 @@ def extract_assets():
 
 
 def send_to_backend(assets):
-    url = "http://localhost:5000/api/assets/bulk"
+    import os
+    base_url = os.environ.get('BACKEND_URL', 'http://localhost:5000')
+    url = f"{base_url}/api/assets/bulk"
     try:
         response = requests.post(url, json={"assets": assets, "projectId": PROJECT_ID})
         if response.status_code == 200:
