@@ -30,7 +30,8 @@ export function ProjectProvider({ children }) {
         if (!saved) { setIsValidating(false); return }
 
         const project = JSON.parse(saved)
-        const res = await axios.get('http://localhost:5000/api/projects')
+        const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'
+        const res = await axios.get(`${baseUrl}/api/projects`)
         const projects = res.data
         const stillExists = projects.find(p => p.id === project.id)
 

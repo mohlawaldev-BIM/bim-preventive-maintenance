@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
 })
 
 export const getAssets = (params = {}) => {
@@ -78,11 +78,12 @@ export const generateWorkOrders = (params = {}) => {
 export const completeWorkOrder = (id) => api.patch(`/workorders/${id}/complete`)
 
 export const getAllWorkOrdersForExport = (params = {}) => {
+  const base = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'
   const query = new URLSearchParams({
     ...(params.projectId && { projectId: params.projectId }),
     ...(params.categories?.length && { categories: params.categories.join(',') }),
   })
-  return `http://localhost:5000/api/export/workorders/pdf?${query}`
+  return `${base}/api/export/workorders/pdf?${query}`
 }
 
 export default api
