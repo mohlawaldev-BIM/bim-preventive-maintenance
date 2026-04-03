@@ -59,7 +59,9 @@ router.post('/', upload.single('ifcFile'), async (req, res) => {
 
     const parserPath = path.join(__dirname, '../../ifc-parser/parser.py');
     const venvPython = path.join(__dirname, '../../ifc-parser/venv/Scripts/python.exe');
-    const pythonCmd = fs.existsSync(venvPython) ? `"${venvPython}"` : 'python';
+    const pythonCmd = fs.existsSync(venvPython)
+      ? `"${venvPython}"`
+      : process.platform === 'win32' ? 'python' : 'python3';
     const command = `${pythonCmd} "${parserPath}" ${project.id}`;
 
     console.log('Starting IFC parser...');
