@@ -58,9 +58,12 @@ router.post('/', upload.single('ifcFile'), async (req, res) => {
     parsingState.lastCompletedProjectId = null; // reset last completed
 
     const parserPath = path.join(__dirname, '../../ifc-parser/parser.py');
-    const venvPython = path.join(__dirname, '../../ifc-parser/venv/Scripts/python.exe');
-    const pythonCmd = fs.existsSync(venvPython)
-      ? `"${venvPython}"`
+    const venvPythonWin = path.join(__dirname, '../../ifc-parser/venv/Scripts/python.exe');
+    const venvPythonUnix = path.join(__dirname, '../../ifc-parser/venv/bin/python');
+    const pythonCmd = fs.existsSync(venvPythonWin)
+      ? `"${venvPythonWin}"`
+      : fs.existsSync(venvPythonUnix)
+      ? `"${venvPythonUnix}"`
       : process.platform === 'win32' ? 'python' : 'python3';
     const command = `${pythonCmd} "${parserPath}" ${project.id}`;
 
